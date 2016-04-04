@@ -1,0 +1,7 @@
+instruction fetch:
+
+MAR <- PC
+MBR <- M[MAR], PC<-PC+1
+IR_Op <-MBR, MAR<-PC
+MBR <- M[MAR], PC<-PC+1
+IR_Addr<-MBR
