@@ -492,6 +492,16 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
+    <appear>
+      <path d="M61,56 Q65,66 69,56" fill="none" stroke="#808080" stroke-width="2"/>
+      <rect fill="none" height="45" stroke="#000000" stroke-width="2" width="31" x="50" y="55"/>
+      <circ-port height="8" pin="110,110" width="8" x="46" y="76"/>
+      <circ-port height="8" pin="60,230" width="8" x="56" y="96"/>
+      <circ-port height="8" pin="60,270" width="8" x="46" y="86"/>
+      <circ-port height="8" pin="60,320" width="8" x="66" y="96"/>
+      <circ-port height="10" pin="290,50" width="10" x="75" y="75"/>
+      <circ-anchor facing="east" height="6" width="6" x="77" y="67"/>
+    </appear>
     <wire from="(130,40)" to="(190,40)"/>
     <wire from="(160,190)" to="(220,190)"/>
     <wire from="(130,50)" to="(180,50)"/>
