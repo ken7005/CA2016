@@ -5,3 +5,8 @@ MBR <- M[MAR], PC<-PC+1
 IR_Op <-MBR, MAR<-PC
 MBR <- M[MAR], PC<-PC+1
 IR_Addr<-MBR
+
+MAR <- PC
+MBR <- M[MAR], PC.MAR<-PC+1
+IR_Op <- MBR, MBR <- M[MAR], PC <- PC+1
+IR_Addr <- MBR
