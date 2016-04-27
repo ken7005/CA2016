@@ -10,3 +10,24 @@ MAR <- PC
 MBR <- M[MAR], PC.MAR<-PC+1
 IR_Op <- MBR, MBR <- M[MAR], PC <- PC+1
 IR_Addr <- MBR
+
+instruction set:
+NOP 
+
+LDA 
+STR
+
+ADD
+SUB
+AND
+OR
+NOT
+SHL
+SHR
+
+BEQ
+BNE
+
+JMP
+
+4bit opcode + immediate mode bit
