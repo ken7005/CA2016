@@ -31,3 +31,9 @@ BNE
 JMP
 
 4bit opcode + immediate mode bit
+
+A  B  M ALU    LDs    rw
+01 xx x 000000 000010 1
+01 xx 1 000100 010110 1
+01 xx 1 000100 010101 1
+11 xx x 000000 001000 1
