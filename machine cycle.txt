@@ -12,43 +12,64 @@ IR_Op <- MBR, MBR <- M[MAR], PC <- PC+1
 IR_Addr <- MBR
 
 instruction set:
-NOP 0000
 
-LDA 0001
-STR 0002
+1 byte OpCode + 1 byte OpAddr
+8 clock cycle
 
-ADD 0003
-SUB 0004
-AND 0005
-OR  0006
-NOT 0007
-SHL 0008
-SHR 0009
+fetch cycle:
+T0 0x00
+T1 0x01
+T2 0x02
+T3 0x03
 
-JMP 000A
+execute cycle:
+nmn Op# T4   T5   T6   T7 
+NOP 0x0 0x10 0x10 0x10 0x10
 
-BEQ 000B
-BNE 000C
+LDA 0x1 0x11 0x12 0x15 0x00
+STR 0x2 0x11 0x14 0x13 0x00
+
+ADD 0x3 0x11 0x12 0x16 0x00
+SUB 0x4
+AND 0x5
+OR  0x6
+NOT 0x7
+SHL 0x8
+SHR 0x9
+
+JMP 0xA 0x11 0x12 0x1D 0x00
+
+BEQ 0xB
+BNE 0xC
 
 
 4bit opcode + immediate mode bit
 
-A  B  M ALU    LDs    rw
-xx xx x xxxxxx 000000 1  NOP
-01 xx x 000000 000010 1  MAR <- PC
-01 xx 1 000100 010110 1  MBR <- M[MAR], PC.MAR<-PC+1
-01 xx 1 000100 010101 1  IR_Op <- MBR, MBR <- M[MAR], PC <- PC+1
-11 xx x 000000 001000 1  IR_Addr <- MBR
+uOp# A  B  M ALU    LDs    rw
+0x00 01 xx x 000000 000010 1  MAR <- PC
+0x01 01 xx 1 000100 010110 1  MBR <- M[MAR], PC.MAR<-PC+1
+0x02 01 xx 1 000100 010101 1  IR_Op <- MBR, MBR <- M[MAR], PC <- PC+1
+0x03 11 xx x 000000 001000 1  IR_Addr <- MBR
 
-10 xx x 000000 000010 1  MAR <- IR_Addr
-xx xx 1 xxxxxx 000100 1  MBR <- M
-11 xx x 000000 100000 1  AC <- MBR
-xx xx x xxxxxx 000000 0  M <- MBR
-00 11 x 001000 100000 1  AC <- AC + MBR
-00 11 x 010100 100000 1  AC <- AC - MBR
-00 11 x 100000 100000 1  AC <- AC & MBR
-00 11 x 101000 100000 1  AC <- AC | MBR
-00 11 x 111000 100000 1  AC <- ~AC
-00 xx x 000010 100000 1  AC <- AC<<1
-00 xx x 000001 100000 1  AC <- AC>>1
-11 xx x 000000 010000 1  PC <- MBR
+0x10 xx xx x xxxxxx 000000 1  NOP
+0x11 10 xx x 000000 000010 1  MAR <- IR_Addr
+0x12 xx xx 1 xxxxxx 000100 1  MBR <- M
+0x13 xx xx x xxxxxx 000000 0  M <- MBR
+0x14 00 xx 0 000000 000100 1  MBR <- AC
+0x15 11 xx x 000000 100000 1  AC <- MBR
+
+0x16 00 11 x 001000 100000 1  AC <- AC + MBR
+0x17 00 11 x 010100 100000 1  AC <- AC - MBR
+0x18 00 11 x 100000 100000 1  AC <- AC & MBR
+0x19 00 11 x 101000 100000 1  AC <- AC | MBR
+0x1A 00 11 x 111000 100000 1  AC <- ~AC
+0x1B 00 xx x 000010 100000 1  AC <- AC<<1
+0x1C 00 xx x 000001 100000 1  AC <- AC>>1
+0x1D 11 xx x 000000 010000 1  PC <- MBR
+
+program: 
+ORG 0
+LDA 250	0x10 0xFA
+ADD 251 0x30 0xFB
+STR 251 0x20 0xFC
+JMP 8	0xA0 0x08
