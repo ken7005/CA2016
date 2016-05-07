@@ -37,7 +37,7 @@ NOT 0x7
 SHL 0x8
 SHR 0x9
 
-JMP 0xA 0x11 0x12 0x1D 0x00
+JMP 0xA 0x1D 0x10 0x10 0x00
 
 BEQ 0xB
 BNE 0xC
@@ -67,9 +67,43 @@ uOp# A  B  M ALU    LDs    rw
 0x1C 00 xx x 000001 100000 1  AC <- AC>>1
 0x1D 11 xx x 000000 010000 1  PC <- MBR
 
+======================================================================
+
 program: 
 ORG 0
 LDA 250	0x10 0xFA
 ADD 251 0x30 0xFB
 STR 251 0x20 0xFC
 JMP 8	0xA0 0x08
+
+fetch cycle:
+T0 0x00
+T1 0x01
+T2 0x02
+T3 0x03
+
+execute cycle:
+nmn Op# T4   T5   T6   T7 
+LDA 0x1 0x11 0x12 0x15 0x00
+STR 0x2 0x11 0x14 0x13 0x00
+ADD 0x3 0x11 0x12 0x16 0x00
+JMP 0xA 0x1D 0x10 0x10 0x00
+
+4bit opcode + immediate mode bit
+
+uOp# A  B  M ALU    LDs    rw
+0x00 01 xx x 000000 000010 1  MAR <- PC
+0x01 01 xx 1 000100 010110 1  MBR <- M[MAR], PC.MAR<-PC+1
+0x02 01 xx 1 000100 010101 1  IR_Op <- MBR, MBR <- M[MAR], PC <- PC+1
+0x03 11 xx x 000000 001000 1  IR_Addr <- MBR
+
+0x10 xx xx x xxxxxx 000000 1  NOP
+0x11 10 xx x 000000 000010 1  MAR <- IR_Addr
+0x12 xx xx 1 xxxxxx 000100 1  MBR <- M
+0x13 xx xx x xxxxxx 000000 0  M <- MBR
+0x14 00 xx 0 000000 000100 1  MBR <- AC
+0x15 11 xx x 000000 100000 1  AC <- MBR
+
+0x16 00 11 x 001000 100000 1  AC <- AC + MBR
+
+0x1D 11 xx x 000000 010000 1  PC <- MBR
