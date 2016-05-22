@@ -1,3 +1,5 @@
+logisim MIPS ref.: home.ku.edu.tr/comp303/public_html
+
 instruction fetch:
 
 MAR <- PC
