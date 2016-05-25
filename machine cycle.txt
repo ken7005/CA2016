@@ -181,7 +181,7 @@ IRAD2PC	10 xx x 000000 0100000 1	PC <- IR_Addr
 
 
 ORG 00
-00: LDA 0xfe	40 fe
+00: LDA 0xfe	80 fe
 02: STR 0xff	f0 ff
 04: SUB 0xfd	a0 fd
 06: BZ  0x12	50 12
